@@ -41,4 +41,6 @@ if ($query->execute()) {
     ]);
 }
 
+echo $user->getToken();
+
 exit;

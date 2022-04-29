@@ -1,22 +1,22 @@
 import {LocalBlogPost} from "../Interface/LocalBlogPost";
+import axios from 'axios';
 
 export default function usePostBlog() {
     return (token: string, blog: LocalBlogPost) => {
-        return fetch('http://localhost:2345/post-blog.php', {
+        console.log(token)
+        return axios({
+            url: 'http://localhost:2345/post-blog.php',
             method: 'POST',
-            mode: 'cors',
-            credentials: 'include',
-            // Ici aussi je pourrais me passer de passer le token en
-            // Bearer et juste le passer par cookie (qui est envoyé
-            // automatiquement et le récupérer en PHP !
+            withCredentials: true,
             headers: {
-                Authorization: `Bearer ${token}`
+                Authorization : `Bearer ${token}`
             },
-            body: new URLSearchParams({
+            data: new URLSearchParams({
                 title: blog.title,
                 content: blog.content
             })
         })
-            .then(res => res.json())
+            .then(res => res.data)
     }
+
 }
